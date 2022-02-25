@@ -1,0 +1,130 @@
+html\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet"  href="form.css">
+  <title>Register</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    <div class="container">
+       <div class="header">
+         <h2>Registration form</h2>
+     </div>
+     <form class="form" id="form">
+     <div class="form-control">
+       <label>Username</label>
+       <input id="username" name="" type="text" placeholder="Enter your name">
+       <i class="fas fa-check-circle"></i>
+       <i class="fas fa-exclamation-circle"></i>
+       <small></small>
+     </div>
+     <div class="form-control" id="passwordd">
+       <label>Password</label>
+       <input id="password" name="" type="password" placeholder="Enter your password">
+       <i class="fas fa-check-circle"></i>
+       <i class="fas fa-exclamation-circle"></i>
+       <small></small>
+     </div>
+     <div class="form-control">
+       <label>Confirm Password </label>
+       <input id="cpassword" name="" type="password" placeholder="Enter your password again">
+       <i class="fas fa-check-circle"></i>
+       <i class="fas fa-exclamation-circle"></i>
+       <small></small>
+     </div>
+     <button>Password</button><br>
+     <button id="animate">Animate to fade</button><br>
+     <button id="animhw">Animate height&weight</button><br>
+      <input type="submit" value="Submit" class="btn" name="">
+
+    </form>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="info.js" charset="utf-8"></script>
+<div>
+</body>
+</html>
+<script>
+$('body').css('background-image', 'url("photo_2022-02-20_23-23-50.jpg")');
+$('button').on('click', function(){
+  $('#passwordd').toggle();
+});
+$("#animate").click(function(){
+  $("div").animate({
+    opacity: '0.1',
+  });
+  });
+  $('#animate').click(function(){
+  $("div").animate({
+    opacity: '0.9',
+  });
+});
+$("#animhw").click(function(){
+  $("h2").animate({
+    height: "100px",
+    weight: "80px"
+  });
+});
+$(document).ready(function() {
+     $(':input[type="submit"]').prop('disabled', true);
+     $('input[type="text"]').keyup(function() {
+        if($(this).val() != '') {
+           $(':input[type="submit"]').prop('disabled', false);
+        }
+     });
+ });
+
+
+const form = document.getElementById('form');
+const username = document.getElementById('username');
+const password = document.getElementById('password');
+const cpassword = document.getElementById('cpassword');
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  validate();
+});
+
+const validate = () => {
+  const usernameVal = username.value.trim();
+  const passwordVal = password.value.trim();
+  const cpasswordVal = cpassword.value.trim();
+
+  if(usernameVal === ''){
+    setError(username, 'username cannot be blank');
+  } else if(usernameVal.length <= 2) {
+    setError(username, 'username cannot be blank');
+  } else {
+    setSuccess(username);
+  }
+  if(passwordVal === ""){
+    setError(password, 'password cannot be blank');
+  } else if(passwordVal.length <= 6) {
+    setError(password, 'minimum 7 char');
+  } else {
+    setSuccess(password);
+  }
+  if(cpasswordVal === ""){
+    setError(cpassword, 'confirm cpassword cannot be blank');
+  } else if(cpasswordVal !== passwordVal) {
+    setError(cpassword, 'password are not matching');
+  } else {
+    setSuccess(cpassword);
+  }
+  success(usernameVal);
+}
+
+function setError(input, error) {
+  const formControl = input.parentElement;
+  const small = formControl.querySelector('small');
+  formControl.className = "form-control error";
+  small.innerText = error;
+}
+function setSuccess(input) {
+  const formControl = input.parentElement;
+  formControl.className = "form-control success";
+}
